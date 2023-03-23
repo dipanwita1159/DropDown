@@ -7,8 +7,8 @@
         <methods>
           <include name="generateReport"/>
           <include name="beforeClass"/>
-          <include name="admin"/>
           <include name="afterClass"/>
+          <include name="CategoriesTest"/>
           <include name="methodName"/>
         </methods>
       </class> <!-- com.mohs10.scripts.HomeTest -->

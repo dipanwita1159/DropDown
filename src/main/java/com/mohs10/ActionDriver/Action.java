@@ -4,18 +4,21 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.server.handler.GetElementAttribute;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -25,45 +28,71 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.mohs10.base.StartBrowser;
 
-public class Action extends com.mohs10.base.StartBrowser{
-public WebDriver driver;
+public class Action extends com.mohs10.base.StartBrowser {
+	public static WebDriver driver;
 
-public Action()
-{
-	driver = StartBrowser.driver;
-}
-/**
- * Used to navigate to any application
- * @param url -- URL of application
- */
-public void navigateToApplication(String url)
-{
-	try {
-		driver.get(url);
-		StartBrowser.childTest.pass("Successfully Navigated to :"+url);
-	} catch (Exception e) {
-		StartBrowser.childTest.fail("Uanble to  Navigate to :"+url);
+	public Action() {
+		driver = StartBrowser.driver;
 	}
-}
-/**
- * Used to perform click on links, buttons, radio buttons and checkboxes
- * @param locator -- Get it from Object Repository
- * @param eleName -- Name of the element
- * @throws Exception
- */
-public void click(By locator, String eleName) throws Exception
-{
-	try {
-		driver.findElement(locator).click();
-		StartBrowser.childTest.pass("Performed click action on :"+eleName);
-	} catch (Exception e) {
-		StartBrowser.childTest.fail("Unable to performe click action on :"+eleName,
-				MediaEntityBuilder.createScreenCaptureFromBase64String(screenShot()).build());
-		StartBrowser.childTest.info(e);
-		throw e;
-	}
-}
 
+	/**
+	 * Used to navigate to any application
+	 * 
+	 * @param url -- URL of application
+	 * 
+	 */
+	public static WebElement getElement(By locator) {
+		
+			return driver.findElement(locator);
+		
+	}
+	
+	public void selectDropDown(By locator,String type,String value) {
+		Select select=new Select(getElement(locator));
+		switch(type) {
+		case"index":
+		select.selectByIndex(Integer.parseInt(value));
+		break;
+		case"value":
+			select.selectByValue(value);
+			break;
+		case"visibletext":
+			select.selectByVisibleText(value);
+			break;
+			default:
+				System.out.println(" please enter a correrctvalue");
+				break;
+		
+		}
+	}
+
+	public void navigateToApplication(String url) {
+		try {
+			driver.get(url);
+			StartBrowser.childTest.pass("Successfully Navigated to :" + url);
+		} catch (Exception e) {
+			StartBrowser.childTest.fail("Uanble to  Navigate to :" + url);
+		}
+	}
+
+	/**
+	 * Used to perform click on links, buttons, radio buttons and checkboxes
+	 * 
+	 * @param locator -- Get it from Object Repository
+	 * @param eleName -- Name of the element
+	 * @throws Exception
+	 */
+	public void click(By locator, String eleName) throws Exception {
+		try {
+			driver.findElement(locator).click();
+			StartBrowser.childTest.pass("Performed click action on :" + eleName);
+		} catch (Exception e) {
+			StartBrowser.childTest.fail("Unable to performe click action on :" + eleName,
+					MediaEntityBuilder.createScreenCaptureFromBase64String(screenShot()).build());
+			StartBrowser.childTest.info(e);
+			throw e;
+		}
+	}
 
 	public void scrollByVisibilityOfElement(WebDriver driver, WebElement ele) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -174,7 +203,7 @@ public void click(By locator, String eleName) throws Exception
 		return flag;
 	}
 
-	public boolean selectBySendkeys(String value,WebElement ele) {
+	public boolean selectBySendkeys(String value, WebElement ele) {
 		boolean flag = false;
 		try {
 			ele.sendKeys(value);
@@ -185,7 +214,7 @@ public void click(By locator, String eleName) throws Exception
 			return false;
 		} finally {
 			if (flag) {
-				System.out.println("Select value from the DropDown");		
+				System.out.println("Select value from the DropDown");
 			} else {
 				System.out.println("Not Selected value from the DropDown");
 				// throw new ElementNotFoundException("", "", "")
@@ -235,7 +264,7 @@ public void click(By locator, String eleName) throws Exception
 	 *                    Listbox etc..)
 	 */
 
-	public boolean selectByValue(WebElement element,String value) {
+	public boolean selectByValue(WebElement element, String value) {
 		boolean flag = false;
 		try {
 			Select s = new Select(element);
@@ -284,7 +313,6 @@ public void click(By locator, String eleName) throws Exception
 		}
 	}
 
-	
 	public boolean mouseHoverByJavaScript(WebElement ele) {
 		boolean flag = false;
 		try {
@@ -310,8 +338,7 @@ public void click(By locator, String eleName) throws Exception
 		}
 	}
 
-	
-	public boolean JSClick(WebDriver driver, WebElement ele)  throws Exception {
+	public boolean JSClick(WebDriver driver, WebElement ele) throws Exception {
 		boolean flag = false;
 		try {
 			// WebElement element = driver.findElement(locator);
@@ -336,8 +363,7 @@ public void click(By locator, String eleName) throws Exception
 		return flag;
 	}
 
-	
-	public boolean switchToFrameByIndex(WebDriver driver,int index) {
+	public boolean switchToFrameByIndex(WebDriver driver, int index) {
 		boolean flag = false;
 		try {
 			new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//iframe")));
@@ -362,8 +388,8 @@ public void click(By locator, String eleName) throws Exception
 	 * @param idValue : Frame ID wish to switch
 	 * 
 	 */
-	
-	public boolean switchToFrameById(WebDriver driver,String idValue) {
+
+	public boolean switchToFrameById(WebDriver driver, String idValue) {
 		boolean flag = false;
 		try {
 			driver.switchTo().frame(idValue);
@@ -388,8 +414,8 @@ public void click(By locator, String eleName) throws Exception
 	 * @param nameValue : Frame Name wish to switch
 	 * 
 	 */
-	
-	public boolean switchToFrameByName(WebDriver driver,String nameValue) {
+
+	public boolean switchToFrameByName(WebDriver driver, String nameValue) {
 		boolean flag = false;
 		try {
 			driver.switchTo().frame(nameValue);
@@ -407,7 +433,6 @@ public void click(By locator, String eleName) throws Exception
 		}
 	}
 
-	
 	public boolean switchToDefaultFrame(WebDriver driver) {
 		boolean flag = false;
 		try {
@@ -426,8 +451,7 @@ public void click(By locator, String eleName) throws Exception
 		}
 	}
 
-	
-	public void mouseOverElement(WebDriver driver,WebElement element) {
+	public void mouseOverElement(WebDriver driver, WebElement element) {
 		boolean flag = false;
 		try {
 			new Actions(driver).moveToElement(element).build().perform();
@@ -443,7 +467,6 @@ public void click(By locator, String eleName) throws Exception
 		}
 	}
 
-	
 	public boolean moveToElement(WebDriver driver, WebElement ele) {
 		boolean flag = false;
 		try {
@@ -460,7 +483,6 @@ public void click(By locator, String eleName) throws Exception
 		return flag;
 	}
 
-	
 	public boolean mouseover(WebDriver driver, WebElement ele) {
 		boolean flag = false;
 		try {
@@ -479,8 +501,8 @@ public void click(By locator, String eleName) throws Exception
 			 */
 		}
 	}
-	
-	public boolean draggable(WebDriver driver,WebElement source, int x, int y) {
+
+	public boolean draggable(WebDriver driver, WebElement source, int x, int y) {
 		boolean flag = false;
 		try {
 			new Actions(driver).dragAndDropBy(source, x, y).build().perform();
@@ -489,19 +511,19 @@ public void click(By locator, String eleName) throws Exception
 			return true;
 
 		} catch (Exception e) {
-		
+
 			return false;
-			
+
 		} finally {
 			if (flag) {
-				System.out.println("Draggable Action is performed on \""+source+"\"");			
-			} else if(!flag) {
-				System.out.println("Draggable action is not performed on \""+source+"\"");
+				System.out.println("Draggable Action is performed on \"" + source + "\"");
+			} else if (!flag) {
+				System.out.println("Draggable action is not performed on \"" + source + "\"");
 			}
 		}
 	}
-	
-	public boolean draganddrop(WebDriver driver,WebElement source, WebElement target) {
+
+	public boolean draganddrop(WebDriver driver, WebElement source, WebElement target) {
 		boolean flag = false;
 		try {
 			new Actions(driver).dragAndDrop(source, target).perform();
@@ -513,14 +535,13 @@ public void click(By locator, String eleName) throws Exception
 		} finally {
 			if (flag) {
 				System.out.println("DragAndDrop Action is performed");
-			} else if(!flag) {
+			} else if (!flag) {
 				System.out.println("DragAndDrop Action is not performed");
 			}
 		}
 	}
-	
-	
-	public boolean slider(WebDriver driver,WebElement ele, int x, int y) {
+
+	public boolean slider(WebDriver driver, WebElement ele, int x, int y) {
 		boolean flag = false;
 		try {
 			// new Actions(driver).dragAndDropBy(dragitem, 400, 1).build()
@@ -540,9 +561,8 @@ public void click(By locator, String eleName) throws Exception
 			}
 		}
 	}
-	
-	
-	public boolean rightclick(WebDriver driver,WebElement ele) {
+
+	public boolean rightclick(WebDriver driver, WebElement ele) {
 		boolean flag = false;
 		try {
 			Actions clicker = new Actions(driver);
@@ -561,25 +581,24 @@ public void click(By locator, String eleName) throws Exception
 			}
 		}
 	}
-	
-	
-	public boolean switchWindowByTitle(WebDriver driver,String windowTitle, int count) {
+
+	public boolean  chWindowByTitle(WebDriver driver, String windowTitle, int count) {
 		boolean flag = false;
 		try {
 			Set<String> windowList = driver.getWindowHandles();
 
 			String[] array = windowList.toArray(new String[0]);
 
-			driver.switchTo().window(array[count-1]);
+			driver.switchTo().window(array[count - 1]);
 
-			if (driver.getTitle().contains(windowTitle)){
+			if (driver.getTitle().contains(windowTitle)) {
 				flag = true;
-			}else{
+			} else {
 				flag = false;
 			}
 			return flag;
 		} catch (Exception e) {
-			//flag = true;
+			// flag = true;
 			return false;
 		} finally {
 			if (flag) {
@@ -589,13 +608,13 @@ public void click(By locator, String eleName) throws Exception
 			}
 		}
 	}
-	
+
 	public boolean switchToNewWindow(WebDriver driver) {
 		boolean flag = false;
 		try {
 
-			Set<String> s=driver.getWindowHandles();
-			Object popup[]=s.toArray();
+			Set<String> s = driver.getWindowHandles();
+			Object popup[] = s.toArray();
 			driver.switchTo().window(popup[1].toString());
 			flag = true;
 			return flag;
@@ -604,19 +623,19 @@ public void click(By locator, String eleName) throws Exception
 			return flag;
 		} finally {
 			if (flag) {
-				System.out.println("Window is Navigated with title");				
+				System.out.println("Window is Navigated with title");
 			} else {
 				System.out.println("The Window with title: is not Selected");
 			}
 		}
 	}
-	
+
 	public boolean switchToOldWindow(WebDriver driver) {
 		boolean flag = false;
 		try {
 
-			Set<String> s=driver.getWindowHandles();
-			Object popup[]=s.toArray();
+			Set<String> s = driver.getWindowHandles();
+			Object popup[] = s.toArray();
 			driver.switchTo().window(popup[0].toString());
 			flag = true;
 			return flag;
@@ -625,13 +644,13 @@ public void click(By locator, String eleName) throws Exception
 			return flag;
 		} finally {
 			if (flag) {
-				System.out.println("Focus navigated to the window with title");			
+				System.out.println("Focus navigated to the window with title");
 			} else {
 				System.out.println("The Window with title: is not Selected");
 			}
 		}
 	}
-	
+
 	public int getColumncount(WebElement row) {
 		List<WebElement> columns = row.findElements(By.tagName("td"));
 		int a = columns.size();
@@ -642,22 +661,20 @@ public void click(By locator, String eleName) throws Exception
 		}
 		return a;
 	}
-	
 
 	public int getRowCount(WebElement table) {
 		List<WebElement> rows = table.findElements(By.tagName("tr"));
 		int a = rows.size() - 1;
 		return a;
 	}
-	
-	
+
 	/**
 	 * Verify alert present or not
 	 * 
 	 * @return: Boolean (True: If alert preset, False: If no alert)
 	 * 
 	 */
-	
+
 	public boolean Alert(WebDriver driver) {
 		boolean presentFlag = false;
 		Alert alert = null;
@@ -675,16 +692,16 @@ public void click(By locator, String eleName) throws Exception
 			ex.printStackTrace();
 		} finally {
 			if (!presentFlag) {
-				System.out.println("The Alert is handled successfully");		
-			} else{
+				System.out.println("The Alert is handled successfully");
+			} else {
 				System.out.println("There was no alert to handle");
 			}
 		}
 
 		return presentFlag;
 	}
-	
-	public boolean launchUrl(WebDriver driver,String url) {
+
+	public boolean launchUrl(WebDriver driver, String url) {
 		boolean flag = false;
 		try {
 			driver.navigate().to(url);
@@ -694,50 +711,43 @@ public void click(By locator, String eleName) throws Exception
 			return false;
 		} finally {
 			if (flag) {
-				System.out.println("Successfully launched \""+url+"\"");				
+				System.out.println("Successfully launched \"" + url + "\"");
 			} else {
-				System.out.println("Failed to launch \""+url+"\"");
+				System.out.println("Failed to launch \"" + url + "\"");
 			}
 		}
 	}
-	
-	
-	public boolean isAlertPresent(WebDriver driver) 
-	{ 
-		try 
-		{ 
-			driver.switchTo().alert(); 
-			return true; 
-		}   // try 
-		catch (NoAlertPresentException Ex) 
-		{ 
-			return false; 
-		}   // catch 
+
+	public boolean isAlertPresent(WebDriver driver) {
+		try {
+			driver.switchTo().alert();
+			return true;
+		} // try
+		catch (NoAlertPresentException Ex) {
+			return false;
+		} // catch
 	}
-	
-	
+
 	public String getTitle(WebDriver driver) {
 		boolean flag = false;
 
 		String text = driver.getTitle();
 		if (flag) {
-			System.out.println("Title of the page is: \""+text+"\"");
+			System.out.println("Title of the page is: \"" + text + "\"");
 		}
 		return text;
 	}
-	
-	
-	public String getCurrentURL(WebDriver driver)  {
+
+	public String getCurrentURL(WebDriver driver) {
 		boolean flag = false;
 
 		String text = driver.getCurrentUrl();
 		if (flag) {
-			System.out.println("Current URL is: \""+text+"\"");
+			System.out.println("Current URL is: \"" + text + "\"");
 		}
 		return text;
 	}
-	
-	
+
 	public boolean click1(WebElement locator, String locatorName) {
 		boolean flag = false;
 		try {
@@ -748,87 +758,83 @@ public void click(By locator, String eleName) throws Exception
 			return false;
 		} finally {
 			if (flag) {
-				System.out.println("Able to click on \""+locatorName+"\"");
+				System.out.println("Able to click on \"" + locatorName + "\"");
 			} else {
-				System.out.println("Click Unable to click on \""+locatorName+"\"");
+				System.out.println("Click Unable to click on \"" + locatorName + "\"");
 			}
 		}
 
 	}
-	
-	
-	public void fluentWait(WebDriver driver,WebElement element, int timeOut) {
-	    Wait<WebDriver> wait = null;
-	    try {
-	        wait = new FluentWait<WebDriver>((WebDriver) driver)
-	        		.withTimeout(Duration.ofSeconds(20))
-	        	    .pollingEvery(Duration.ofSeconds(2))
-	        	    .ignoring(Exception.class);
-	        wait.until(ExpectedConditions.visibilityOf(element));
-	        element.click();
-	    }catch(Exception e) {
-	    }
+
+	public void fluentWait(WebDriver driver, WebElement element, int timeOut) {
+		Wait<WebDriver> wait = null;
+		try {
+			wait = new FluentWait<WebDriver>((WebDriver) driver).withTimeout(Duration.ofSeconds(20))
+					.pollingEvery(Duration.ofSeconds(2)).ignoring(Exception.class);
+			wait.until(ExpectedConditions.visibilityOf(element));
+			element.click();
+		} catch (Exception e) {
+		}
 	}
-	
+
 	public static void implicitWait(WebDriver driver, int timeOut) {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
-	
-	public void explicitWait(WebDriver driver, WebElement element, int timeOut ) {
-		WebDriverWait wait = new WebDriverWait(driver,timeOut);
+
+	public void explicitWait(WebDriver driver, WebElement element, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, timeOut);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
-	
+
 	public static void pageLoadTimeOut(WebDriver driver, int timeOut) {
 		driver.manage().timeouts().pageLoadTimeout(timeOut, TimeUnit.SECONDS);
 	}
-	
-	public String screenShot()
-	{
+
+	public String screenShot() {
 		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
 	}
-	
+
 	public String getCurrentTime() {
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd-hhmmss").format(new Date());
 		return currentDate;
 	}
-	
-	public void type(By locator, String testData, String eleName) throws Exception
-	{
-	
+
+	public void type(By locator, String testData, String eleName) throws Exception {
+
 		try {
-			
-	driver.findElement(locator).sendKeys(testData);
-	StartBrowser.childTest.pass("Successfully performed type action on :"+eleName + " With test data :"+testData);
-	} catch (Exception e) {
-		
-	StartBrowser.childTest.fail("Unable to performe type action action on :"+eleName + " With test data :"+testData,
-	MediaEntityBuilder.createScreenCaptureFromBase64String(screenShot()).build());
-	StartBrowser.childTest.info(e);
-	throw e;
-	}
-	}
-	
-	/**
-	 * Get text from element
-	 * @param locator -- get it from OR
-	 * @param eleName
-	 * @return
-	 * @throws Exception
-	 */
-	public String getText(By locator, String eleName) throws Exception
-	{
-		try {
-			String text=driver.findElement(locator).getText();
-			StartBrowser.childTest.pass("Successfully got text from element : "+eleName + "And Text is : "+text);
-			 return text;
+
+			driver.findElement(locator).sendKeys(testData);
+			StartBrowser.childTest
+					.pass("Successfully performed type action on :" + eleName + " With test data :" + testData);
 		} catch (Exception e) {
-			StartBrowser.childTest.fail("Unable to performe type action action on :"+eleName,
+
+			StartBrowser.childTest.fail(
+					"Unable to performe type action action on :" + eleName + " With test data :" + testData,
 					MediaEntityBuilder.createScreenCaptureFromBase64String(screenShot()).build());
 			StartBrowser.childTest.info(e);
 			throw e;
 		}
 	}
-	
+
+	/**
+	 * Get text from element
+	 * 
+	 * @param locator -- get it from OR
+	 * @param eleName
+	 * @return
+	 * @throws Exception
+	 */
+	public String getText(By locator, String eleName) throws Exception {
+		try {
+			String text = driver.findElement(locator).getText();
+			StartBrowser.childTest.pass("Successfully got text from element : " + eleName + "And Text is : " + text);
+			return text;
+		} catch (Exception e) {
+			StartBrowser.childTest.fail("Unable to performe type action action on :" + eleName,
+					MediaEntityBuilder.createScreenCaptureFromBase64String(screenShot()).build());
+			StartBrowser.childTest.info(e);
+			throw e;
+		}
+	}
 
 }

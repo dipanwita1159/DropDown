@@ -1,13 +1,19 @@
 package com.mohs10.reuse;
-	import org.openqa.selenium.Keys;
+	import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 	import org.openqa.selenium.WebDriver;
-	import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.mohs10.base.StartBrowser;
 import com.mohs10.ActionDriver.Action;
 import com.mohs10.or.HomePage;
 
-	public class CommonFuns {
+	public class CommonFuns extends Action {
 		
 		public Action aDriver;
 		public WebDriver driver;
@@ -18,131 +24,40 @@ import com.mohs10.or.HomePage;
 			driver = StartBrowser.driver;
 		}
 		
-		// Registration process
-				/*public void Register(String Firstname, String Lastname, String Email, String Pwd, String ConfirmPwd) throws Exception
-				{
-					StartBrowser.childTest = StartBrowser.parentTest.createNode("Register in DemoWeb shop");
-					aDriver.navigateToApplication("https://demowebshop.tricentis.com/");
-					aDriver.click(HomePage.lnkRegister, "Register link");
-					aDriver.click(HomePage.rbGender, "Radio button Gender");
-					aDriver.type(HomePage.txtFirstname,  Firstname, "FirstName text box");
-					aDriver.type(HomePage.txtLastname, Lastname, "LastName text box");
-					aDriver.type(HomePage.txtEmail, Email, "Email text box");
-					aDriver.type(HomePage.txtPassword, Pwd, "password text box");
-					aDriver.type(HomePage.txtConfirmpassword, ConfirmPwd, "confirm password text box");
-					aDriver.click(HomePage.btnRegister, "Register button");
-					aDriver.click(HomePage.btnContinue, "Continue button");*/
-				
-				
-	/*
-	 * //Login process
-	 * 
-	 * public void logIn(String email, String pwd) throws Exception {
-	 * StartBrowser.childTest =
-	 * StartBrowser.parentTest.createNode("Login to DemoWeb shop");
-	 * aDriver.navigateToApplication("http://demowebshop.tricentis.com/");
-	 * aDriver.click(HomePage.lnkLogin, "Login link");
-	 * aDriver.type(HomePage.txtemail, email, "email text box");
-	 * aDriver.type(HomePage.txtpwd, pwd, "password text box");
-	 * aDriver.click(HomePage.btnlogin, "Login button");
-	 * aDriver.click(HomePage.lnkLogout, "Logout link");
-	 * 
-	 * // //invalid login process
-	 * 
-	 * public void invalidLogIn(String email, String pwd) throws Exception {
-	 * StartBrowser.childTest = StartBrowser.parentTest.
-	 * createNode("Login to DemoWeb shop with invalid credentials");
-	 * aDriver.navigateToApplication("http://demowebshop.tricentis.com/");
-	 * aDriver.click(HomePage.lnkLogin, "Login link");
-	 * aDriver.type(HomePage.txtemail, email, "email text box");
-	 * aDriver.type(HomePage.txtpwd, pwd, "password text box");
-	 * aDriver.click(HomePage.btnlogin, "Login button"); }
-	 */
-		
-		
-			
-				/*
-				 * //News button public void Pagedown() throws Exception
-				 * 
-				 * { StartBrowser.childTest =StartBrowser.parentTest.createNode("Page down");
-				 * aDriver.navigateToApplication("http://demowebshop.tricentis.com/"); Actions
-				 * a=new Actions(driver); a.sendKeys(Keys.PAGE_DOWN).perform();
-				 * a.sendKeys(Keys.PAGE_DOWN).perform(); }
-				 * 
-				 * public void Newsbtn() throws Exception { StartBrowser.childTest =
-				 * StartBrowser.parentTest.createNode("News button");
-				 * aDriver.navigateToApplication("http://demowebshop.tricentis.com/");
-				 * aDriver.click(HomePage.btnNews, "Performed click operation on News button");
-				 * }
-				 */
-				/*
-				 * //Blog Link public void Blogbtn() throws Exception { StartBrowser.childTest =
-				 * StartBrowser.parentTest.createNode("Blog buttton");
-				 * aDriver.navigateToApplication("http://demowebshop.tricentis.com/");
-				 * aDriver.click(HomePage.btnBlog, "Performed click operation on Blog button");
-				 */
-			  
 			  
 				
-				  //Categories 
-		public void Categories() throws Exception {
-				  StartBrowser.childTest =
-				  StartBrowser.parentTest.createNode("Category links");
-				  aDriver.navigateToApplication("https://demowebshop.tricentis.com/");
-				  aDriver.click(HomePage.lnkbook, "Performed click operation on books link");
-				  aDriver.click(HomePage.addtocart,"added to cart");
-				  
-				  aDriver.click(HomePage.lnkApparelandShoes, "null");
-				  aDriver.click(HomePage.dress,"dress added");
-				  aDriver.click(HomePage.dressclick, "null"); // aDriver.click(HomePage.mobile,"null"); // aDriver.click(HomePage.clickonmobile, "null");
-				  aDriver.click(HomePage.lnkShoppingCart,"cart");
-				  aDriver.click(HomePage.remove, "null"); aDriver.click(HomePage.adclick, "null");
-				  aDriver.click(HomePage.checkout, "null");}
-		
-			  
-			  
               
-			  //shopping cart entry
-			 /* public void Shopping(String email,String pwd) throws Exception {
-					StartBrowser.childTest =
-							  StartBrowser.parentTest.createNode("shopping cart");
-					aDriver.navigateToApplication("https://demowebshop.tricentis.com/");
-					aDriver.click(HomePage.shop, "pwd");
-					aDriver.type(HomePage.email, email, "email");
-					aDriver.type(HomePage.password, pwd, "pwd");*/
-			   
 			 
-			  
+		public void datePicker(String url,String value1,String value2) throws Exception {
+			StartBrowser.childTest=StartBrowser.parentTest.createNode("login");
+			aDriver.navigateToApplication(url);
 			
-			   /*aDriver.click(HomePage.
-			  lnkElectronics,"Performed click operation on Electronics Link");
-			  aDriver.click(HomePage.
-			  lnkApparelandShoes,"Performed click operation on Apparel and Shoes Link");
-			  aDriver.click(HomePage.
-			  lnkDigitaldownloads,"Performed click operation on Digital Downloads Link");
-			  aDriver.click(HomePage.lnkJewelry,"Performed click operation on Jewelry Link"
-			  ); aDriver.click(HomePage.
-			  lnkGiftCards,"Performed click operation on Gift Cards Link");
-			  */
-			  
-	//admin verify
-	/*public void login(String userid,String paswd) throws Exception {
-		StartBrowser.childTest=StartBrowser.parentTest.createNode("login");
-		aDriver.navigateToApplication("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-		aDriver.type(HomePage.loginemail,userid,"email" );
-		aDriver.type(HomePage.loginpwd, paswd,"password");
-		aDriver.click(HomePage.clickLoginButton," log in button clicked");
-		aDriver.click(HomePage.adminbuttonClick,"admin button click");
-		aDriver.click(HomePage.ckeckbox, "checkbox clicked");
-		if(HomePage.userRole!=HomePage.userRole){
+			/*
+			 * long timeoutInSeconds = 0; WebDriver webDriver = null; WebDriverWait wait =
+			 * new WebDriverWait(webDriver, timeoutInSeconds);
+			 * wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("datepicker"))
+			 * ); aDriver.click(HomePage.datepick, "date pickers");
+			 */
+			//aDriver.datepicker(HomePage.datepick, "url");
+			//aDriver.click(HomePage.book, "value2");
+			Thread.sleep(2000);
+			JavascriptExecutor je=(JavascriptExecutor)driver;//Instance of js executor
+			je.executeScript("window.scroll(0,500)\r\n");
+			 aDriver.selectDropDown(HomePage.datepick,"value", value2);
+			 
+				//je.executeScript("window.scroll(0,5000)\r\n");
+			// aDriver.selectDropDown(HomePage.Numberofemployee, "index", value2);
+			 
+			/*
+			 * Actions a1=new Actions(driver); a1.sendKeys(Keys.PAGE_UP).perform();
+			 * a1.sendKeys(Keys.ENTER).perform();
+			 */
 			
-		 aDriver.click(HomePage.deletbutton, "deleted userpaswd");}
-		else {
-			System.out.println("amdin found");}
-		aDriver.click(HomePage.popup," click on popup");
-		
-		
-	}*/
+			
+		}
+	
+	
+	
 	}
 			  
 			  

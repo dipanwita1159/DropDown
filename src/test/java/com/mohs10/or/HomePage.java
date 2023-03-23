@@ -2,8 +2,16 @@ package com.mohs10.or;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ByXPath;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class HomePage {
+	WebDriver driver;
+	public static By datepick=By.xpath("//select[@id='Form_getForm_Country']");
+	public static By Numberofemployee=By.xpath("//select[@id='Form_getForm_NoOfEmployees']");
+	public static By book=By.xpath("//div[@class='d-flex web-menu-btn']//li[1]//a[1]");
+	
+	
 	
 	
 	
@@ -138,7 +146,7 @@ public class HomePage {
 	 * xpath("//strong[normalize-space()='Your order has been successfully processed!']"
 	 * );*/
 	
-	
+
 	//Login In OrangeHrm//
 	/*  public static By loginemail=By.xpath("//input[@placeholder='Username']");
 	  public static By loginpwd=By.xpath("//input[@placeholder='Password']");
