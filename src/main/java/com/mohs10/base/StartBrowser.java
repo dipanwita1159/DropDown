@@ -46,7 +46,7 @@ public class StartBrowser {
     options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
 		 // WebDriverManager.firefoxdriver().setup();
 		  //WebDriverManager.edgedriver().setup();
-		  driver = new ChromeDriver();
+		  driver = new ChromeDriver(options);
 		// driver= new FirefoxDriver();
 		 // driver=new msedgeDriver();
 		  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
