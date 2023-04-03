@@ -40,12 +40,12 @@ public class StartBrowser {
 	 }
 	  @BeforeClass
 	  public void beforeClass() {
-		  // WebDriverManager.chromedriver().setup();
+		   WebDriverManager.chromedriver().setup();
 		 // WebDriverManager.firefoxdriver().setup();
-		  WebDriverManager.edgedriver().setup();
-		 // driver = new ChromeDriver();
+		  //WebDriverManager.edgedriver().setup();
+		  driver = new ChromeDriver();
 		// driver= new FirefoxDriver();
-		  driver=new EdgeDriver();
+		 // driver=new msedgeDriver();
 		  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		  driver.manage().window().maximize();
 	  }
