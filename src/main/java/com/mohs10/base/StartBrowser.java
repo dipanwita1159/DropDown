@@ -40,7 +40,7 @@ public class StartBrowser {
 	 }
 	  @BeforeClass
 	  public void beforeClass() {
-		   System.setProperty("webdriver.chrome.driver", "Chromedriver.exe");
+		   System.setProperty("webdriver.chrome.driver", "C:\\Users\\DELL\\Downloads\\chromedriver_win32 (3)\\chromedriver.exe");
 		 // Create a ChromeOptions object and specify the path to the Chrome binary
         ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application");
