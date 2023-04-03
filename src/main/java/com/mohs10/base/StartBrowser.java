@@ -40,8 +40,8 @@ public class StartBrowser {
 	 }
 	  @BeforeClass
 	  public void beforeClass() {
-		   WebDriverManager.chromedriver().setup();
-		 // WebDriverManager.firefoxdriver().setup();
+		  // WebDriverManager.chromedriver().setup();
+		  WebDriverManager.firefoxdriver().setup();
 		  //WebDriverManager.edgedriver().setup();
 		  driver = new ChromeDriver();
 		  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
