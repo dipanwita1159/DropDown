@@ -14,6 +14,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 
 public class StartBrowser {
@@ -42,7 +43,7 @@ public class StartBrowser {
 		   System.setProperty("webdriver.chrome.driver", "Chromedriver.exe");
 		 // Create a ChromeOptions object and specify the path to the Chrome binary
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("C:\Program Files (x86)\Google\Chrome\Application");
+        options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application");
 
         // Create a ChromeDriver instance with the ChromeOptions object
         WebDriver driver = new ChromeDriver(options);
