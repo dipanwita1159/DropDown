@@ -39,10 +39,14 @@ public class StartBrowser {
 	 }
 	  @BeforeClass
 	  public void beforeClass() {
-		  WebDriverManager.chromedriver().setup();
-		 // WebDriverManager.firefoxdriver().setup();
-		  //WebDriverManager.edgedriver().setup();
-		  driver = new ChromeDriver();
+		   System.setProperty("webdriver.chrome.driver", "Chromedriver.exe");
+		 // Create a ChromeOptions object and specify the path to the Chrome binary
+        ChromeOptions options = new ChromeOptions();
+        options.setBinary("C:\Program Files (x86)\Google\Chrome\Application");
+
+        // Create a ChromeDriver instance with the ChromeOptions object
+        WebDriver driver = new ChromeDriver(options);
+
 		  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		  driver.manage().window().maximize();
 	  }
